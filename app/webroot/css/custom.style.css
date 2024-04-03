@@ -1,0 +1,17 @@
+.input > label {
+    width: 40%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+div.submit {
+    display: flex;
+    justify-content: end;
+    padding-top: 10px;
+}
+
+.message.error {
+    font-size: 1.5rem;
+    margin: 15px 0px 30px 0px;
+    color: #721c24;
+}
