@@ -10,6 +10,7 @@ class User extends AppModel {
         ), 
         'password' => array(
             'rule' => 'notBlank'
-        )
+        ),
+        'last_login_time' => array()
     );
 }

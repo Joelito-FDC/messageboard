@@ -13,5 +13,5 @@
     echo $this->Form->create('User');
     echo $this->Form->input('email', array('style' => 'width: 60%'));
     echo $this->Form->input('password', array('style' => 'width: 60%'));
-    echo $this->Form->end('Login', array('style' => 'background-color: green'));
+    echo $this->Form->end('Login');
 ?>

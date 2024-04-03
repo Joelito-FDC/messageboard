@@ -4,6 +4,12 @@
     padding-right: 10px;
 }
 
+.profile-form > form > .input > label {
+    width: 30% !important;
+    text-align: right;
+    padding-right: 10px;
+}
+
 div.submit {
     display: flex;
     justify-content: end;
@@ -14,4 +20,23 @@ div.submit {
     font-size: 1.5rem;
     margin: 15px 0px 30px 0px;
     color: #721c24;
+}
+
+.custom-radio-layout {
+    display: inline;
+}
+
+.input.textarea > label {
+    float: inline-start;
+    /* top: 0px; */
+}
+
+.input.file > label {
+    width: 100%;
+    text-align: center !important;
+    border-radius: 5px;
+    padding-left: 6px;
+    background-color: #6c757d;
+    color: #fff;
+    border: 2px solid black;
 }

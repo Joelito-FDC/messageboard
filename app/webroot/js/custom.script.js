@@ -1,0 +1,1 @@
+$('#profile-date').datepicker();

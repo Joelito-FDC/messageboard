@@ -15,5 +15,5 @@
     echo $this->Form->input('email', array('style' => 'width: 60%'));
     echo $this->Form->input('password', array('style' => 'width: 60%'));
     echo $this->Form->input('confirm_password', array('style' => 'width: 60%', 'type' => 'password'));
-    echo $this->Form->end('Register', array('style' => 'background-color: green'));
+    echo $this->Form->end('Register');
 ?>
