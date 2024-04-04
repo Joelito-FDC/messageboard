@@ -11,12 +11,8 @@ class User extends AppModel {
         'password' => array(
             'rule' => 'notBlank'
         ),
-        'birthdate' => array(
-            'rule' => 'notBlank'
-        ), 
-        'gender' => array(
-            'rule' => 'notBlank'
-        ),
+        'birthdate' => array(), 
+        'gender' => array(),
         'profile_pic' => array(),
         'last_login_time' => array()
     );
@@ -24,10 +20,13 @@ class User extends AppModel {
 
     public function fileUpload($file) {
         if(!empty($file['tmp_name'])) {
-            $targetDirectory = "/" . $file['name'];
+            $ext = pathinfo('');
+            $type = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = uniqid() . '_profile.' . $type;
+            $target = $_SERVER['DOCUMENT_ROOT'] . '/messageboard/app/webroot/files/' . $filename;
 
-            if(move_uploaded_file($file['tmp_name'], $targetDirectory)) {
-                return true;
+            if(move_uploaded_file($file['tmp_name'], $target)) {
+                return $filename;
             }
         }
 

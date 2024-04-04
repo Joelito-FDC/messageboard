@@ -23,7 +23,9 @@ div.submit {
 }
 
 .custom-radio-layout {
-    display: inline;
+    display: inline-block;
+    width: 68%;
+    text-align: left;
 }
 
 .input.textarea > label {
@@ -40,3 +42,7 @@ div.submit {
     color: #fff;
     border: 2px solid black;
 }
+
+/* label[for="MessageMessage"] {
+    width: 46%;
+} */

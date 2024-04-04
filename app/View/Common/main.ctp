@@ -36,6 +36,9 @@
                 <div>
                     <?php echo $this->fetch('content') ?>
                 </div>
+                <div class="w-100 pt-3">
+                    <?php echo $this->fetch('message') ?>
+                </div>
             </div>
         </div>
         <?php echo $this->fetch('scriptBottom') ?>

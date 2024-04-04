@@ -11,8 +11,9 @@
     $this->assign('title', 'Account');
 ?>
 
-<?php echo $this->Flash->render(); ?>
-
+<div class="text-center">
+    <?php echo $this->Flash->render(); ?>
+<div>
 <div class="p-2">
     <div class="m-1 profile-form">
         <?php echo $this->Form->create('User', array('enctype' => 'multipart/form-data')); ?>
@@ -30,12 +31,12 @@
             <div class="input">
                 <label>Gender</label>
                 <div class="custom-radio-layout">
-                    <?php echo $this->Form->radio('gender', array('1' => 'Male', '0' => 'Female'), array('legend' => false)); ?>
+                    <?php echo $this->Form->radio('gender', array('male' => 'Male', 'female' => 'Female'), array('legend' => false)); ?>
                 </div>
             </div>
         <?php
             echo $this->Form->input('hobby', array('rows' => '3', 'style' => 'width: 70%; resize: none;'));
-            echo $this->Form->end('Update', array('style' => 'background-color: green'))
+            echo $this->Form->end('Update', array('style' => 'background-color: green'));
         ?>
     </div>
 </div>

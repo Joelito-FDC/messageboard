@@ -62,26 +62,32 @@ class UsersController extends AppController {
 
     public function account() {
         $this->layout = '';
+        $this->set('id', $this->Session->read('User.id'));
 
         if($this->request->is('post')) {
             $this->User->create();
 
             $this->User->id = $this->Session->read('User.id');
             $image = $this->request->data['User']['profile_pic'];
+            $filename = null;
 
-            $this->Flash->set($_SERVER['DOCUMENT_ROOT']);
+            if($this->request->data['User']['profile_pic']['size'] > 0 && !$filename = $this->User->fileUpload($image)) {
+                $this->Flash->error('Unable to modify information', array('clear' => true));
 
-            // if($this->User->fileUpload($image)) {
-            //     $this->Flash->set('Success', array('clear' => true));
-            // } else {
-            //     $this->Flash->set(print_r($this->request->data), array('clear' => true));
-            // }
+                return;
+            }
 
-            // if($this->User->save($this->request->data)) {
-            //     $this->Flash->success(print_r($this->request->data), array('clear' => true));
-            // } else {
-            //     $this->Flash->error(print_r($this->request->data), array('clear' => true));
-            // }
+            $this->request->data['User']['profile_pic'] = $filename;
+
+            if(!empty($this->request->data['User']['birthdate'])) {
+                $this->request->data['User']['birthdate'] = date('Y-m-d', strtotime($this->request->data['User']['birthdate']));
+            }
+
+            if($this->User->save($this->request->data)) {
+                $this->Flash->success('Redirect to other page.', array('clear' => true));
+            } else {
+                $this->Flash->error('Unable to modify information.', array('clear' => true));
+            }
         }
     }
 }
