@@ -6,6 +6,7 @@ class UsersController extends AppController {
     public $helpers = array('Html', 'Form', 'Flash');
     public $components = array('Flash');
     
+
     public function registration() {        
         $this->layout = '';
         
@@ -23,9 +24,11 @@ class UsersController extends AppController {
         }
     }
 
+
     public function registered() {
         $this->layout = '';
     }
+
 
     public function login() {
         $this->layout = '';
@@ -41,6 +44,8 @@ class UsersController extends AppController {
                 $this->User->id = $auth['User']['id'];
 
                 if($this->User->save(array('User' => array('last_login_time' => date('Y-m-d H:i:s'))))) {
+                    $this->Session->write('User.id', $auth['User']['id']);
+                    
                     return $this->redirect(array('controller' => 'users', 'action' => 'account'));
                 }
             } 
@@ -49,16 +54,34 @@ class UsersController extends AppController {
         }
     }
 
+
     public function profile() {
-        $this->layout = '';
+        $this->layout = ''; 
     }
+
 
     public function account() {
         $this->layout = '';
 
         if($this->request->is('post')) {
-            // $this->Info->create();
-            $this->Flash->set(print_r($this->UsersInfo), array('clear' => true));
+            $this->User->create();
+
+            $this->User->id = $this->Session->read('User.id');
+            $image = $this->request->data['User']['profile_pic'];
+
+            $this->Flash->set($_SERVER['DOCUMENT_ROOT']);
+
+            // if($this->User->fileUpload($image)) {
+            //     $this->Flash->set('Success', array('clear' => true));
+            // } else {
+            //     $this->Flash->set(print_r($this->request->data), array('clear' => true));
+            // }
+
+            // if($this->User->save($this->request->data)) {
+            //     $this->Flash->success(print_r($this->request->data), array('clear' => true));
+            // } else {
+            //     $this->Flash->error(print_r($this->request->data), array('clear' => true));
+            // }
         }
     }
 }

@@ -15,17 +15,17 @@
 
 <div class="p-2">
     <div class="m-1 profile-form">
-        <?php echo $this->Form->create('UsersInfo', array('enctype' => 'multipart/form-data')); ?>
+        <?php echo $this->Form->create('User', array('enctype' => 'multipart/form-data')); ?>
         <div class="mb-3 d-flex align-items-center">
             <div class="border m-1" style="width: 100px; height: 100px;">
             </div>
             <div class="m-1">
-                <?php echo $this->Form->input('upload_pic', array('type' => 'file', 'class' => 'd-none')) ?>
+                <?php echo $this->Form->input('profile_pic', array('type' => 'file', 'label' => 'Upload Pic', 'accept' => 'image/png, image/jpeg, image/gif', 'class' => 'd-none')) ?>
             </div>
         </div>
         <?php
             echo $this->Form->input('name', array('style' => 'width: 70%'));
-            echo $this->Form->input('birthdate', array('id' => 'profile-date', 'style' => 'width: 70%'));
+            echo $this->Form->input('birthdate', array('type' => 'text', 'id' => 'profile-date', 'style' => 'width: 70%'));
         ?>
             <div class="input">
                 <label>Gender</label>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         <?php
-            echo $this->Form->input('Hobby', array('rows' => '3', 'style' => 'width: 70%; resize: none;'));
+            echo $this->Form->input('hobby', array('rows' => '3', 'style' => 'width: 70%; resize: none;'));
             echo $this->Form->end('Update', array('style' => 'background-color: green'))
         ?>
     </div>
