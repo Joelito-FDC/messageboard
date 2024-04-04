@@ -13,15 +13,28 @@
     $this->assign('title', 'New Message');
 ?>
 
+<?php //print_r($recipient); ?>
 <?php $this->start('message'); ?>
-    <div class="border d-flex flex-column align-items-center">
-        <div>
+    <div class="border">
+        <div class="d-flex justify-content-center mb-1">
             <label for="recipient">Recipient</label>
-            <input id="recipient" type="text">
+            <div class="w-50 ml-2">
+                <select id="recip-list" class="w-100" id="recipient" type="text">
+                    <?php foreach($recipient as $contact): ?>
+                        <option value="<?php echo $contact['User']['id'] ?>"><?php echo $contact['User']['name'] ?></option>    
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
-        <div>
-            <label for="message">Message</label>
-            <textarea id="message" cols="30" rows="5"></textarea>
+        <div class="d-flex justify-content-center mb-1"> 
+            <label for="message" style="float: inline-start;">Message</label>
+            <textarea class="w-50 ml-2" style="resize: none;" id="message" cols="30" rows="5"></textarea>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="invisible">DUMMY</div>
+            <div class="w-50 ml-2">
+                <button type="button" class="btn btn-secondary">Send Message</button>   
+            </div>
         </div>
     </div>
 <?php $this->end(); ?>

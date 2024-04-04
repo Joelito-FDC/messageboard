@@ -22,5 +22,7 @@ class MessagesController extends AppController {
 
     public function new() {
         $this->layout = '';
+
+        $this->set('recipient', $this->User->find('all'));
     }
 }
