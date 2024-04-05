@@ -15,12 +15,13 @@
 
 <?php //print_r($recipient); ?>
 <?php $this->start('message'); ?>
-    <div class="border">
+    <div>
         <div class="d-flex justify-content-center mb-1">
             <label for="recipient">Recipient</label>
             <div class="w-50 ml-2">
                 <select id="recip-list" class="w-100" id="recipient" type="text">
                     <?php foreach($recipient as $contact): ?>
+                        <?php if($contact['User']['id'] == $userId) continue; ?>
                         <option value="<?php echo $contact['User']['id'] ?>"><?php echo $contact['User']['name'] ?></option>    
                     <?php endforeach; ?>
                 </select>
@@ -28,12 +29,12 @@
         </div>
         <div class="d-flex justify-content-center mb-1"> 
             <label for="message" style="float: inline-start;">Message</label>
-            <textarea class="w-50 ml-2" style="resize: none;" id="message" cols="30" rows="5"></textarea>
+            <textarea id="message" class="w-50 ml-2" style="resize: none;" cols="30" rows="5"></textarea>
         </div>
         <div class="d-flex justify-content-center">
             <div class="invisible">DUMMY</div>
             <div class="w-50 ml-2">
-                <button type="button" class="btn btn-secondary">Send Message</button>   
+                <button type="button" id="send-message-btn" data-link-redirect="<?php echo $this->Form->url(array('controller' => 'messages', 'action' => 'threads')) ?>"  data-link-url="<?php echo $this->Form->url(array('controller' => 'messages', 'action' => 'send')) ?>" data-user-id="<?php echo $userId ?>" class="btn btn-secondary">Send Message</button>   
             </div>
         </div>
     </div>

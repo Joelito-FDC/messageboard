@@ -228,9 +228,9 @@
  */
 	Configure::write('Session', array(
 		'defaults' => 'php',
-		'timeout' => 1440,
+		'timeout' => 10080,
 		'ini' => array(
-			'session.gc_maxlifetime' => 86400
+			'session.gc_maxlifetime' => 604800
 		)
 	));
 

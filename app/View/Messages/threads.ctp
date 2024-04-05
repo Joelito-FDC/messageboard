@@ -12,11 +12,18 @@
 ?>
 
 <?php $this->start('message'); ?>
-    <div class="border">
-        <div>
-            <?php echo $this->Form->create('Message') ?>
-            <?php echo $this->Form->input('message', array('placeholder' => 'Message', 'rows' => '2', 'style' => 'resize: none; width: 60%;', 'label' => '')) ?>
-            <?php echo $this->Form->end('Reply Message') ?>
+    <div>
+        <div class="mb-2">
+            <div class="d-flex flex-row-reverse mb-2">
+                <textarea id="thread-message" placeholder="Message" name="" id="" rows="3" style="width: 50%; resize: none;"></textarea>
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button id="send-thread-message-btn" class="btn btn-secondary">Reply Message</button>
+            </div>
         </div>   
+        <div id="thread-message-list" class="border">
+        </div>
     </div>
 <?php $this->end(); ?>
+
+<?php echo $this->Js->writeBuffer(); ?>
