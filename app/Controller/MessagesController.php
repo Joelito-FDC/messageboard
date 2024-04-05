@@ -5,12 +5,13 @@ class MessagesController extends AppController {
     public $components = array('Flash', 'Paginator');
     public $uses = array('User', 'Message');
     public $paginate = array(
-        'limit' => 5, 
+        'limit' => 10, 
         'order' => array(
             'Message.created' => 'desc'
         ),
-        'fields' => array('Message.message, Message.created')
+        'fields' => array('Message.message, Message.created, Message.recipient_id, Message.user_id')
     );
+
 
     public function index() {
         $this->layout = '';
@@ -21,25 +22,33 @@ class MessagesController extends AppController {
 
     public function threads($recipientId) {
         $this->layout = '';
+
+        $this->set('recipientId', $recipientId);
+        $this->set('userId', $this->Session->read('User.id'));
+    }
+
+
+    public function convo($recipientId) {
+        $this->layout = '';
         $this->Paginator->settings = $this->paginate;
         
         $data = $this->Paginator->paginate('Message', array(
             'OR' => array(
-                array('Message.recipient_id' => $recipientId),
-                array('Message.recipient_id' => $this->Session->read('User.id'))
-            ),
-            'OR' => array(
-                array('Message.user_id' => $recipientId),
-                array('Message.user_id' => $this->Session->read('User.id'))
+                array(
+                    'Message.recipient_id' => $recipientId,
+                    'Message.user_id' => $this->Session->read('User.id')
+                ),
+                array(
+                    'Message.recipient_id' => $this->Session->read('User.id'),
+                    'Message.user_id' => $recipientId
+                )              
             )
         ));
 
-        $this->Paginator->options(array('update' => '#thread-message-list', 'evalScripts' => true));
-
-        if($this->request->is('post')) {
-            $this->Message->create();   
-        }
+        $this->set('messages', $data); 
+        $this->set('userId', $this->Session->read('User.id'));
     }
+
 
     public function new() {
         $this->layout = '';

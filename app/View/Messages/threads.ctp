@@ -15,15 +15,14 @@
     <div>
         <div class="mb-2">
             <div class="d-flex flex-row-reverse mb-2">
-                <textarea id="thread-message" placeholder="Message" name="" id="" rows="3" style="width: 50%; resize: none;"></textarea>
+                <textarea id="thread-message" placeholder="Message" name="" id="" rows="2" style="width: 75%; resize: none;"></textarea>
             </div>
             <div class="d-flex flex-row-reverse">
                 <button id="send-thread-message-btn" class="btn btn-secondary">Reply Message</button>
             </div>
         </div>   
-        <div id="thread-message-list" class="border">
+        <div id="thread-message-list" data-thread-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', $recipientId)); ?>">
+            
         </div>
     </div>
 <?php $this->end(); ?>
-
-<?php echo $this->Js->writeBuffer(); ?>

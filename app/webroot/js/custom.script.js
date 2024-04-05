@@ -37,4 +37,14 @@ $(document).ready(function() {
             })
         }
     }
+
+    if($('#thread-message-list').length) {
+        let threadLink = $('#thread-message-list').data('threadLink');
+
+        $.get(threadLink, function(response) {
+            $('#thread-message-list').html(response);
+        }).fail(function() {
+            $('#thread-message-list').html('<div class="text-center">Error fetching data.</div>');
+        });
+    }
 })
