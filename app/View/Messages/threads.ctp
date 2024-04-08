@@ -18,10 +18,10 @@
                 <textarea id="thread-message" placeholder="Message" name="" id="" rows="2" style="width: 75%; resize: none;"></textarea>
             </div>
             <div class="d-flex flex-row-reverse">
-                <button id="send-thread-message-btn" class="btn btn-secondary">Reply Message</button>
+                <button id="send-thread-message-btn" class="btn btn-secondary" data-thread-send-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'send', $recipientId)); ?>">Reply Message</button>
             </div>
         </div>   
-        <div id="thread-message-list" data-thread-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', $recipientId)); ?>">
+        <div class="message-list" id="thread-message-list" data-thread-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', 'threads', $recipientId)); ?>">
             
         </div>
     </div>

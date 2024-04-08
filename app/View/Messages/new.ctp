@@ -13,7 +13,6 @@
     $this->assign('title', 'New Message');
 ?>
 
-<?php //print_r($recipient); ?>
 <?php $this->start('message'); ?>
     <div>
         <div class="d-flex justify-content-center mb-1">
@@ -34,7 +33,7 @@
         <div class="d-flex justify-content-center">
             <div class="invisible">DUMMY</div>
             <div class="w-50 ml-2">
-                <button type="button" id="send-message-btn" data-link-redirect="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'threads')) ?>"  data-link-url="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'send')) ?>" data-user-id="<?php echo $userId ?>" class="btn btn-secondary">Send Message</button>   
+                <button type="button" id="send-message-btn" data-link-redirect="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'threads')) ?>"  data-link-url="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'send')) ?>" class="btn btn-secondary">Send Message</button>   
             </div>
         </div>
     </div>

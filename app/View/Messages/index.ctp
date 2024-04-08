@@ -12,5 +12,14 @@
 ?>
 
 <?php $this->start('message'); ?>
-<?php print_r($people); ?>
+    <div>
+        <div class="mb-2">
+            <div class="d-flex flex-row-reverse">
+                <button class="btn btn-secondary" id="message-list-compose-message" data-new-message-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'new')) ?>">New Message</button>
+            </div>
+        </div>   
+        <div class="message-list" id="message-all-list" data-message-list-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', 'list')); ?>">
+            
+        </div>
+    </div>
 <?php $this->end(); ?>

@@ -12,9 +12,7 @@
             </div>
         </div>
     </div>
-<?php 
-    endforeach; 
-?>
-    <div class="d-flex justify-content-center">
-        <?php echo $this->Paginator->next('Show More'); ?>
-    </div>
+<?php endforeach; ?>
+<div class="d-flex justify-content-center">
+    <?php echo $this->Paginator->next('Show More'); ?>
+</div>
