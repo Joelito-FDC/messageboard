@@ -11,9 +11,15 @@ class User extends AppModel {
         'password' => array(
             'rule' => 'notBlank'
         ),
-        'birthdate' => array(), 
-        'gender' => array(),
-        'profile_pic' => array(),
+        'birthdate' => array(
+            'rule' => 'notBlank'
+        ), 
+        'gender' => array(
+            'rule' => 'notBlank'
+        ),
+        'profile_pic' => array(
+            // 'rule' => 'notBlank'
+        ),
         'last_login_time' => array()
     );
 
@@ -23,7 +29,7 @@ class User extends AppModel {
             $ext = pathinfo('');
             $type = pathinfo($file['name'], PATHINFO_EXTENSION);
             $filename = uniqid() . '_profile.' . $type;
-            $target = $_SERVER['DOCUMENT_ROOT'] . '/messageboard/app/webroot/files/' . $filename;
+            $target = $_SERVER['DOCUMENT_ROOT'] . '/messageboard/app/webroot/img/' . $filename;
 
             if(move_uploaded_file($file['tmp_name'], $target)) {
                 return $filename;

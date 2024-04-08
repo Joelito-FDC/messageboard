@@ -20,7 +20,6 @@
             </div>
         </div>   
         <div class="message-list" id="message-all-list" data-message-list-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', 'list')); ?>">
-            
         </div>
     </div>
 <?php $this->end(); ?>

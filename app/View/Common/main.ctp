@@ -25,7 +25,7 @@
                         </li>
                     </ul>
                     <span class="navbar-text">
-                        <a href="#" class="text-secondary">Logout</a>
+                        <?php echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout'), array('class' => 'text-secondary')) ?>
                     </span>
                 </div>
             </nav>

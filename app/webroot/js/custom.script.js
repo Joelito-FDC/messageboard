@@ -8,6 +8,22 @@ $(document).ready(function() {
         $('#recip-list').select2();
     }
 
+    if($('#UserProfilePic').length) {
+        $('#UserProfilePic').on('change', function(e) {
+            let file = this.files[0];
+
+            if(file) {
+                let reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    $('#profile-img-preview').attr('src', event.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
     if($('#send-message-btn').length) {
         $('#send-message-btn').on('click', function(e) {
             let recipient = $('#recip-list').val();
@@ -70,15 +86,20 @@ $(document).ready(function() {
     function loadThread(threadLink) {
         $.get(threadLink, function (response) {
             $('.message-list').html(response);
-            $('.next > a').on('click', function(e) {
-                e.preventDefault();
-                
-                let next = $('.next > a').attr('href');       
 
-                loadThread(next);
-            });
+            if($('.next').length && !$('.next > a').length) {
+                $('.next').html('');
+            } else {
+                $('.next > a').on('click', function(e) {
+                    e.preventDefault();
+                    
+                    let next = $('.next > a').attr('href');       
+    
+                    loadThread(next);
+                });
+            }
 
-            if($('#message-list-delete-btn').length) {
+            if($('#message-list-delete-btn').length && $('#message-all-list').length) {
                 let user = $('#message-list-delete-btn').data('deleteUser');
                 let recipient = $('#message-list-delete-btn').data('deleteRecipient');
                 let linkUrl = $('#message-list-delete-btn').data('removeLink');
@@ -93,10 +114,9 @@ $(document).ready(function() {
                         },
                         dataType: 'text',
                         success: function (response) {
-                            console.log(response);
-                            // if(response == '_deleted_') {
-
-                            // } 
+                            if(response == '_deleted_') {
+                                loadThread($('#message-all-list').data('newMessageLink'));
+                            }
                         },
                         error: function (error) {
                         }

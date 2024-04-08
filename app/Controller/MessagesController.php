@@ -14,6 +14,8 @@ class MessagesController extends AppController {
     public function threads($recipientId) {
         $this->layout = '';
 
+        if(empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+
         $this->set('recipientId', $recipientId);
     }
 
@@ -21,6 +23,12 @@ class MessagesController extends AppController {
     public function convo($view, $recipientId = null) {
         $this->layout = '';
         
+        if(empty($this->Session->read('User.id'))) {
+            echo "<div style='text-align: center;'>Prohibited</div>";
+
+            exit();
+        }
+
         $this->Paginator->settings = array(
             'limit' => 10, 
             'order' => array(
@@ -45,7 +53,7 @@ class MessagesController extends AppController {
             $this->set('page', 'thread');
         } else {
             $this->Paginator->settings = array(
-                'limit' => 1,
+                'limit' => 10,
                 'fields' => array('Message.user_id', 'Message.recipient_id', 'Message.message', 'Message.id', 'Message.created'),
                 'order' => array('Message.created' => 'asc'),
                 'group' => array('(`Message`.`user_id` + `Message`.`recipient_id`)')
@@ -67,6 +75,8 @@ class MessagesController extends AppController {
     public function new() {
         $this->layout = '';
 
+        if(empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+
         $this->set('recipient', $this->User->find('all'));
         $this->set('userId', $this->Session->read('User.id'));
     }
@@ -74,6 +84,12 @@ class MessagesController extends AppController {
 
     public function send($recipientId) {
         $this->response->type('text');
+
+        if(empty($this->Session->read('User.id'))) {
+            echo "_not_sent_";
+
+            exit();
+        }
 
         if($this->request->is('post')) {
             $request = $this->request->data;
@@ -92,6 +108,12 @@ class MessagesController extends AppController {
 
     public function delete() {
         $this->response->type('text');
+
+        if(empty($this->Session->read('User.id'))) {
+            echo "_not_sent_";
+
+            exit();
+        }
 
         if($this->request->is('post')) {
             $request = $this->request->data;

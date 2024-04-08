@@ -13,6 +13,12 @@ class UsersController extends AppController {
         if($this->request->is('post')) {
             $this->User->create();
 
+            if($this->User->find('first', array('conditions' => array('email' => $this->request->data['User']['email'])))) {
+                $this->Flash->error('Email already registered.', array('clear' => true));
+
+                return;
+            }
+
             $pass = $this->request->data['User']['password'];
             $this->request->data['User']['password'] = Security::hash($pass, 'sha1', true);
 
@@ -32,6 +38,8 @@ class UsersController extends AppController {
 
     public function login() {
         $this->layout = '';
+
+        if(!empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'profile'));
 
         if($this->request->is('post')) {
             $email = $this->request->data['User']['email'];
@@ -58,12 +66,20 @@ class UsersController extends AppController {
 
     public function profile() {
         $this->layout = ''; 
+
+        if(empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+
+        $this->set('accountInfo', $this->User->find('first', array('conditions' => array('User.id' => $this->Session->read('User.id')))));
     }
 
 
     public function account() {
         $this->layout = '';
+        
+        if(empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        
         $this->set('id', $this->Session->read('User.id'));
+        $this->set('accountInfo', $this->User->find('first', array('conditions' => array('User.id' => $this->Session->read('User.id')))));
 
         if($this->request->is('post')) {
             $this->User->create();
@@ -76,19 +92,27 @@ class UsersController extends AppController {
                 $this->Flash->error('Unable to modify information', array('clear' => true));
 
                 return;
+            } elseif($this->request->data['User']['profile_pic']['size'] == 0) {
+                unset($this->request->data['User']['profile_pic']);
+            } else {
+                $this->request->data['User']['profile_pic'] = $filename;
             }
-
-            $this->request->data['User']['profile_pic'] = $filename;
 
             if(!empty($this->request->data['User']['birthdate'])) {
                 $this->request->data['User']['birthdate'] = date('Y-m-d', strtotime($this->request->data['User']['birthdate']));
             }
 
             if($this->User->save($this->request->data)) {
-                $this->Flash->success('Redirect to other page.', array('clear' => true));
+                return $this->redirect(array('controller' => 'users', 'action' => 'profile'));
             } else {
                 $this->Flash->error('Unable to modify information.', array('clear' => true));
             }
         }
+    }
+
+    public function logout() {
+        $this->Session->destroy();
+
+        return $this->redirect(array('controller' => 'users', 'action' => 'login'));
     }
 }

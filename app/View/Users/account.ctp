@@ -20,23 +20,38 @@
         <?php echo $this->Form->create('User', array('enctype' => 'multipart/form-data')); ?>
         <div class="mb-3 d-flex align-items-center">
             <div class="border m-1" style="width: 100px; height: 100px;">
+                <?php 
+                    if(!empty($accountInfo['User']['profile_pic'])) {
+                        echo $this->Html->image(h($accountInfo['User']['profile_pic']), array('id' => 'profile-img-preview', 'style' => 'width: 100px; height: 100px;'));
+                    } else {
+                ?>
+                        <img id="profile-img-preview" src="" style="width: 100px; height: 100px;">
+                <?php
+                    }
+                ?>
             </div>
             <div class="m-1">
                 <?php echo $this->Form->input('profile_pic', array('type' => 'file', 'label' => 'Upload Pic', 'accept' => 'image/png, image/jpeg, image/gif', 'class' => 'd-none')) ?>
             </div>
         </div>
         <?php
-            echo $this->Form->input('name', array('style' => 'width: 70%'));
-            echo $this->Form->input('birthdate', array('type' => 'text', 'id' => 'profile-date', 'style' => 'width: 70%'));
+            if(!empty($accountInfo['User']['birthdate'])) {
+                $birthdate = date('m/d/Y', strtotime($accountInfo['User']['birthdate']));
+            } else {
+                $birthdate = '';
+            }
+
+            echo $this->Form->input('name', array('style' => 'width: 70%', 'value' => h($accountInfo['User']['name'])));
+            echo $this->Form->input('birthdate', array('type' => 'text', 'id' => 'profile-date', 'style' => 'width: 70%', 'value' => $birthdate));
         ?>
             <div class="input">
                 <label>Gender</label>
                 <div class="custom-radio-layout">
-                    <?php echo $this->Form->radio('gender', array('male' => 'Male', 'female' => 'Female'), array('legend' => false)); ?>
+                    <?php echo $this->Form->radio('gender', array('male' => 'Male', 'female' => 'Female'), array('legend' => false, 'value' => h($accountInfo['User']['gender']))); ?>
                 </div>
             </div>
         <?php
-            echo $this->Form->input('hobby', array('rows' => '3', 'style' => 'width: 70%; resize: none;'));
+            echo $this->Form->input('hobby', array('rows' => '3', 'style' => 'width: 70%; resize: none;', 'value' => h($accountInfo['User']['hobby'])));
             echo $this->Form->end('Update', array('style' => 'background-color: green'));
         ?>
     </div>
