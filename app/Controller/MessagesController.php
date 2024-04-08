@@ -7,6 +7,7 @@ class MessagesController extends AppController {
 
     public function index() {
         $this->layout = '';
+        $this->set('username', $this->Session->read('User.name'));
     }
 
 
@@ -41,9 +42,10 @@ class MessagesController extends AppController {
                     )              
                 )
             ));
+            $this->set('page', 'thread');
         } else {
             $this->Paginator->settings = array(
-                'limit' => 10,
+                'limit' => 1,
                 'fields' => array('Message.user_id', 'Message.recipient_id', 'Message.message', 'Message.id', 'Message.created'),
                 'order' => array('Message.created' => 'asc'),
                 'group' => array('(`Message`.`user_id` + `Message`.`recipient_id`)')
@@ -54,6 +56,7 @@ class MessagesController extends AppController {
                     'Message.recipient_id' => $this->Session->read('User.id')
                 )
             ));
+            $this->set('page', 'list');
         }
 
         $this->set('messages', $data); 
@@ -74,6 +77,7 @@ class MessagesController extends AppController {
 
         if($this->request->is('post')) {
             $request = $this->request->data;
+            
             $this->Message->create();
             
             if($this->Message->save(array('Message' => array('user_id' => $this->Session->read('User.id'), 'recipient_id' => $recipientId, 'message' => $request['message'])))) {
@@ -82,6 +86,24 @@ class MessagesController extends AppController {
                 echo "_not_sent_";
             }
 
+            exit();
+        }
+    }
+
+    public function delete() {
+        $this->response->type('text');
+
+        if($this->request->is('post')) {
+            $request = $this->request->data;
+
+            $this->Message->create();
+
+            if($this->Message->deleteAll(array('Message.user_id' => $request['user'], 'Message.recipient_id' => $request['recipient']))) {
+                echo "_deleted_";
+            } else {
+                echo "_not_deleted_";
+            }
+            
             exit();
         }
     }

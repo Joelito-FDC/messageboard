@@ -11,6 +11,7 @@
     $this->Html->script('custom.script', array('block' => 'scriptBottom'));
     $this->Html->script('select2.min.js', array('block' => 'scriptBottom'));
     $this->assign('title', 'New Message');
+    $this->assign('username', $this->Session->read('User.name'));
 ?>
 
 <?php $this->start('message'); ?>

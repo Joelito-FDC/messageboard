@@ -45,6 +45,7 @@ class UsersController extends AppController {
 
                 if($this->User->save(array('User' => array('last_login_time' => date('Y-m-d H:i:s'))))) {
                     $this->Session->write('User.id', $auth['User']['id']);
+                    $this->Session->write('User.name', $auth['User']['name']);
                     
                     return $this->redirect(array('controller' => 'users', 'action' => 'account'));
                 }

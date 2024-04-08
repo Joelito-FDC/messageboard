@@ -23,10 +23,11 @@ $(document).ready(function() {
                 },
                 dataType: 'text',
                 success: function (response) {
-                    window.location.href = linkRedirect + '/' + recipient;
+                    if(response == '_sent_') {
+                        window.location.href = linkRedirect + '/' + recipient;
+                    }
                 },
                 error: function (error) {
-                    // console.log(error);
                 }
             });
         });
@@ -49,21 +50,16 @@ $(document).ready(function() {
                 success: function (response) {
                     if(response == '_sent_') {
                         $('#thread-message').val('');
-                        loadThread();
-                        $('.next > a').on('click', function(e) {
-                            console.log('Hello');
-                        })
+                        loadThread($('#thread-message-list').data('threadLink'));
                     } 
                 },
                 error: function (error) {
-                    // console.log(error);
                 }
             });
         });
     }
 
     if($('#message-all-list').length && $('#message-list-compose-message').length) {
-        console.log($('#message-all-list').data('messageListLink'));
         loadThread($('#message-all-list').data('messageListLink'));
 
         $('#message-list-compose-message').on('click', function() {
@@ -77,9 +73,36 @@ $(document).ready(function() {
             $('.next > a').on('click', function(e) {
                 e.preventDefault();
                 
-                let next = $('.next > a').attr('href');
+                let next = $('.next > a').attr('href');       
+
                 loadThread(next);
             });
+
+            if($('#message-list-delete-btn').length) {
+                let user = $('#message-list-delete-btn').data('deleteUser');
+                let recipient = $('#message-list-delete-btn').data('deleteRecipient');
+                let linkUrl = $('#message-list-delete-btn').data('removeLink');
+
+                $('#message-list-delete-btn').on('click', function() {
+                    $.ajax({
+                        method: 'POST',
+                        url: linkUrl,
+                        data: {
+                            user,
+                            recipient
+                        },
+                        dataType: 'text',
+                        success: function (response) {
+                            console.log(response);
+                            // if(response == '_deleted_') {
+
+                            // } 
+                        },
+                        error: function (error) {
+                        }
+                    });
+                });
+            }
         }).fail(function () {
             $('#message-list').html('<div class="text-center">Error fetching data.</div>');
         });

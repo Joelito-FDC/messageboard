@@ -8,24 +8,24 @@
     <body class="h-100">
         <div class="container h-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Message Board</a>
+                <a class="navbar-brand" href="#"><?php echo h($this->fetch('username')) ?></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">User Profile <span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <?php echo $this->Html->link('User Profile', array('controller' => 'users', 'action' => 'profile'), array('class' => 'nav-link')) ?>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Account</a>
+                            <?php echo $this->Html->link('Account', array('controller' => 'users', 'action' => 'account'), array('class' => 'nav-link')) ?>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Messages</a>
+                            <?php echo $this->Html->link('Messages', array('controller' => 'messages', 'action' => 'index'), array('class' => 'nav-link')) ?>
                         </li>
                     </ul>
                     <span class="navbar-text">
-                        Navbar text with an inline element
+                        <a href="#" class="text-secondary">Logout</a>
                     </span>
                 </div>
             </nav>

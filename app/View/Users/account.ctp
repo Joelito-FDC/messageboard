@@ -9,6 +9,7 @@
     $this->Html->script('jquery-ui-1.13.2.custom/jquery-ui.js', array('block' => 'scriptBottom'));
     $this->Html->script('custom.script', array('block' => 'scriptBottom'));
     $this->assign('title', 'Account');
+    $this->assign('username', $this->Session->read('User.name'));
 ?>
 
 <div class="text-center">
