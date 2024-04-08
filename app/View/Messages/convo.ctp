@@ -1,6 +1,7 @@
 <?php foreach($messages as $message): ?>
     <div id="<?php if($page == 'list') echo 'ms-id-' . $message['Message']['id'] ?>" class="mb-2 d-flex <?php if($userId == $message['Message']['user_id']) echo 'flex-row-reverse' ?>">
-        <div class="border" style="height: 80px; width: 80px;"></div>
+        <div class="border" style="height: 80px; width: 80px;">
+        </div>
         <div class="border d-flex flex-column" style="width: 100%; height: 80px;">
             <div class="p-2 border-bottom h-100 <?php if($page == 'list') echo 'd-flex justify-content-between' ?>">
                 <div>
