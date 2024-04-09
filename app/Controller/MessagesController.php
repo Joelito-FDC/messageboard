@@ -2,7 +2,7 @@
 
 class MessagesController extends AppController {
     public $helpers = array('Html', 'Form', 'Flash');
-    public $components = array('Flash', 'Paginator');
+    public $components = array('Flash', 'Paginator', 'RequestHandler');
     public $uses = array('User', 'Message');
 
     public function index() {
@@ -29,16 +29,15 @@ class MessagesController extends AppController {
             exit();
         }
 
-        $this->Paginator->settings = array(
-            'limit' => 10, 
-            'order' => array(
-                'Message.created' => 'desc'
-            ),
-            'fields' => array('Message.message, Message.created, Message.recipient_id, Message.user_id')
-        );
-
         if($view == 'threads' && $recipientId) {
-            $data = $this->Paginator->paginate('Message', array(
+            $this->Paginator->settings = array(
+                'limit' => 10, 
+                'order' => array(
+                    'Message.created' => 'desc'
+                ),
+                'fields' => array('Message.message, Message.created, Message.recipient_id, Message.user_id')
+            );
+            $pageConditions = array(
                 'OR' => array(
                     array(
                         'Message.recipient_id' => $recipientId,
@@ -49,7 +48,14 @@ class MessagesController extends AppController {
                         'Message.user_id' => $recipientId
                     )              
                 )
-            ));
+            );
+
+            if($this->request->is('post')) {
+                $pageConditions['Message.message LIKE'] = '%' . $this->request->data['searchWord'] . '%';
+            }
+
+            $data = $this->Paginator->paginate('Message', $pageConditions);
+            
             $this->set('recipientProfile', $this->User->find('first', array('conditions' => array('User.id' => $recipientId))));
             $this->set('page', 'thread');
         } else {
@@ -59,12 +65,19 @@ class MessagesController extends AppController {
                 'order' => array('Message.created' => 'asc'),
                 'group' => array('(`Message`.`user_id` + `Message`.`recipient_id`)')
             );
-            $data = $this->Paginator->paginate('Message', array(
+            $pageConditions = array(
                 'OR' => array(
                     'Message.user_id' => $this->Session->read('User.id'),
                     'Message.recipient_id' => $this->Session->read('User.id')
                 )
-            ));
+            );
+            
+            if($this->request->is('post')) {
+                $pageConditions['Message.message LIKE'] = '%' . $this->request->data['searchWord'] . '%';
+            }
+
+            $data = $this->Paginator->paginate('Message', $pageConditions);
+            
             $this->set('page', 'list');
         }
 
@@ -97,7 +110,7 @@ class MessagesController extends AppController {
             
             $this->Message->create();
             
-            if($this->Message->save(array('Message' => array('user_id' => $this->Session->read('User.id'), 'recipient_id' => $recipientId, 'message' => $request['message'])))) {
+            if($this->Message->save(array('Message' => array('user_id' => $this->Session->read('User.id'), 'recipient_id' => $recipientId, 'message' => $request['message'], 'created_ip' => $this->request->clientIp())))) {
                 echo "_sent_";
             } else {
                 echo "_not_sent_";

@@ -14,6 +14,14 @@
 <?php $this->start('message'); ?>
     <div>
         <div class="mb-2">
+            <div class="d-flex">
+                <div class="mr-2">
+                    <input id="message-srch-input" type="search" class="form-control mb-3" style="width: 300px">
+                </div>
+                <div>
+                    <button id="message-srch-btn" class="btn btn-secondary" data-thread-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', 'threads', $recipientId)); ?>">search</button>
+                </div>
+            </div>
             <div class="d-flex flex-row-reverse mb-2">
                 <textarea id="thread-message" placeholder="Message" name="" id="" rows="2" style="width: 75%; resize: none;"></textarea>
             </div>

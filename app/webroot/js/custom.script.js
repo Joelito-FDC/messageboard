@@ -42,8 +42,6 @@ $(document).ready(function() {
                     if(response == '_sent_') {
                         window.location.href = linkRedirect + '/' + recipient;
                     }
-                },
-                error: function (error) {
                 }
             });
         });
@@ -68,8 +66,6 @@ $(document).ready(function() {
                         $('#thread-message').val('');
                         loadThread($('#thread-message-list').data('threadLink'));
                     } 
-                },
-                error: function (error) {
                 }
             });
         });
@@ -83,10 +79,50 @@ $(document).ready(function() {
         });
     }
 
+    if($('#message-srch-btn').length) {
+        $('#message-srch-btn').on('click', function() {
+            srchConvo($(this).data('threadLink'), $('#message-srch-input').val());
+        });   
+    }
+
+    if($('#message-list-srch-btn').length) {
+        $('#message-list-srch-btn').on('click', function() {
+            srchConvo($(this).data('threadLink'), $('#message-list-srch-input').val());
+        })
+    }
+
+    function srchConvo(linkUrl, searchWord) {
+        $.ajax({
+            method: 'POST',
+            url: linkUrl,
+            data: {
+                searchWord
+            },
+            dataType: 'text',
+            success: function (response) {
+                $('.message-list').html(response);
+
+                if($('.next').length && !$('.next > a').length) {
+                    $('.next').html('');
+                } else {
+                    console.log($('.next > a').attr('href'));
+
+                    $('.next > a').on('click', function(e) {
+                        e.preventDefault();
+                        
+                        let next = $('.next > a').attr('href');  
+                        
+                        srchConvo(next);
+                    });
+                }
+            }
+        });
+    }
+
     function loadThread(threadLink) {
         $.get(threadLink, function (response) {
             $('.message-list').html(response);
-
+    
             if($('.next').length && !$('.next > a').length) {
                 $('.next').html('');
             } else {
@@ -99,32 +135,41 @@ $(document).ready(function() {
                 });
             }
 
-            if($('#message-list-delete-btn').length && $('#message-all-list').length) {
-                let user = $('#message-list-delete-btn').data('deleteUser');
-                let recipient = $('#message-list-delete-btn').data('deleteRecipient');
-                let linkUrl = $('#message-list-delete-btn').data('removeLink');
+            if($('.message-delete-btn').length) {
+                let elDelBtn = $('.message-delete-btn');
 
-                $('#message-list-delete-btn').on('click', function() {
-                    $.ajax({
-                        method: 'POST',
-                        url: linkUrl,
-                        data: {
-                            user,
-                            recipient
-                        },
-                        dataType: 'text',
-                        success: function (response) {
-                            if(response == '_deleted_') {
-                                loadThread($('#message-all-list').data('newMessageLink'));
+                for(let elCount = 0; elCount < elDelBtn.length; elCount++) {
+                    $(elDelBtn[elCount]).on('click', function() {
+                        let user = $(this).data('deleteUser');
+                        let recipient = $(this).data('deleteRecipient');
+                        let linkUrl = $(this).data('removeLink');
+
+                        $.ajax({
+                            method: 'POST',
+                            url: linkUrl,
+                            data: {
+                                user,
+                                recipient
+                            },
+                            dataType: 'text',
+                            success: function (response) {
+                                if(response == '_deleted_') {
+                                    loadThread($('#message-all-list').data('newMessageLink'));
+                                }
                             }
-                        },
-                        error: function (error) {
-                        }
+                        });
                     });
-                });
+                }
+            }
+
+            if(('.msg-clickable-container').length) {
+                $('.msg-clickable-container').on('click', function() {
+                    window.location.href = $(this).data('redirectLink');
+                })
             }
         }).fail(function () {
             $('#message-list').html('<div class="text-center">Error fetching data.</div>');
         });
     }
-})
+});
+

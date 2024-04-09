@@ -14,6 +14,14 @@
 <?php $this->start('message'); ?>
     <div>
         <div class="mb-2">
+            <div class="d-flex">
+                <div class="mr-2">
+                    <input id="message-list-srch-input" type="search" class="form-control mb-3" style="width: 300px">
+                </div>
+                <div>
+                    <button id="message-list-srch-btn" class="btn btn-secondary" data-thread-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'convo', 'index')); ?>">search</button>
+                </div>
+            </div>
             <div class="d-flex flex-row-reverse">
                 <button class="btn btn-secondary" id="message-list-compose-message" data-new-message-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'new')) ?>">New Message</button>
             </div>

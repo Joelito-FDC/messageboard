@@ -43,6 +43,6 @@ div.submit {
     border: 2px solid black;
 }
 
-/* label[for="MessageMessage"] {
-    width: 46%;
-} */
+.msg-clickable-container:hover {
+    cursor: pointer;
+}
