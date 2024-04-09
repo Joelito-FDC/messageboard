@@ -167,6 +167,10 @@ $(document).ready(function() {
                     window.location.href = $(this).data('redirectLink');
                 })
             }
+
+            if($('.show-more-msg-content').length) {
+
+            }
         }).fail(function () {
             $('#message-list').html('<div class="text-center">Error fetching data.</div>');
         });

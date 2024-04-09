@@ -14,7 +14,7 @@
 <?php $this->start('message'); ?>
     <div>
         <div class="mb-2">
-            <div class="d-flex">
+            <div class="d-flex justify-content-center">
                 <div class="mr-2">
                     <input id="message-srch-input" type="search" class="form-control mb-3" style="width: 300px">
                 </div>

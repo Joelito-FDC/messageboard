@@ -31,11 +31,21 @@ class MessagesController extends AppController {
 
         if($view == 'threads' && $recipientId) {
             $this->Paginator->settings = array(
+                'joins' => array(
+                    array(
+                        'table' => 'Users',
+                        'alias' => 'Users',
+                        'type' => 'LEFT',
+                        'conditions' => array(
+                            'Message.user_id = Users.id'
+                        )
+                    )
+                ),
                 'limit' => 10, 
                 'order' => array(
                     'Message.created' => 'desc'
                 ),
-                'fields' => array('Message.message, Message.created, Message.recipient_id, Message.user_id')
+                'fields' => array('Message.message', 'Message.created', 'Message.recipient_id', 'Message.user_id', 'Users.name')
             );
             $pageConditions = array(
                 'OR' => array(
@@ -61,8 +71,8 @@ class MessagesController extends AppController {
         } else {
             $this->Paginator->settings = array(
                 'limit' => 10,
-                'fields' => array('Message.user_id', 'Message.recipient_id', 'Message.message', 'Message.id', 'Message.created'),
-                'order' => array('Message.created' => 'asc'),
+                'fields' => array('Message.user_id', 'Message.recipient_id', 'Message.message', 'Message.id', 'Message.created', '(SELECT name FROM users WHERE id = Message.user_id) AS sender', '(SELECT name FROM users WHERE id = Message.recipient_id) AS recipient'),
+                'order' => array('Message.created' => 'desc'),
                 'group' => array('(`Message`.`user_id` + `Message`.`recipient_id`)')
             );
             $pageConditions = array(
@@ -77,7 +87,7 @@ class MessagesController extends AppController {
             }
 
             $data = $this->Paginator->paginate('Message', $pageConditions);
-            
+
             $this->set('page', 'list');
         }
 
