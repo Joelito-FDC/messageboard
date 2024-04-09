@@ -9,7 +9,6 @@
     $this->Html->script('jquery-ui-1.13.2.custom/jquery-ui.js', array('block' => 'scriptBottom'));
     $this->Html->script('custom.script', array('block' => 'scriptBottom'));
     $this->assign('title', 'Account');
-    $this->assign('username', $this->Session->read('User.name'));
 ?>
 
 <div class="text-center">
@@ -21,13 +20,13 @@
         <div class="mb-3 d-flex align-items-center">
             <div class="border m-1" style="width: 100px; height: 100px;">
                 <?php 
-                    if(!empty($accountInfo['User']['profile_pic'])) {
-                        echo $this->Html->image(h($accountInfo['User']['profile_pic']), array('id' => 'profile-img-preview', 'style' => 'width: 100px; height: 100px;'));
-                    } else {
+                    if(!empty($accountInfo['User']['profile_pic'])):
+                        echo $this->Html->image($accountInfo['User']['profile_pic'], array('id' => 'profile-img-preview', 'style' => 'width: 100px; height: 100px;'));
+                    else:
                 ?>
-                        <img id="profile-img-preview" src="" style="width: 100px; height: 100px;">
+                        <img id="profile-img-preview" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" style="width: 100px; height: 100px;">
                 <?php
-                    }
+                    endif;
                 ?>
             </div>
             <div class="m-1">

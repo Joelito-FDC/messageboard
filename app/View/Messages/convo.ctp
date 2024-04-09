@@ -1,6 +1,25 @@
 <?php foreach($messages as $message): ?>
     <div id="<?php if($page == 'list') echo 'ms-id-' . $message['Message']['id'] ?>" class="mb-2 d-flex <?php if($userId == $message['Message']['user_id']) echo 'flex-row-reverse' ?>">
         <div class="border" style="height: 80px; width: 80px;">
+            <?php
+                if($userId == $message['Message']['user_id']):
+                    if(!empty($this->Session->read('User.profile'))):
+                        echo $this->Html->image($this->Session->read('User.profile'), array('style' => 'width: 78px; height: 78px;'));
+                    else:
+            ?>
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" style="width: 80px; height: 80px;">
+            <?php
+                    endif;
+                else:
+                    if(!empty($recipientProfile['User']['profile_pic'])):
+                        echo $this->Html->image($recipientProfile['User']['profile_pic'], array('style' => 'width: 78px; height: 78px;'));
+                    else:
+            ?>
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" style="width: 80px; height: 80px;">
+            <?php
+                    endif;
+                endif;
+            ?>
         </div>
         <div class="border d-flex flex-column" style="width: 100%; height: 80px;">
             <div class="p-2 border-bottom h-100 <?php if($page == 'list') echo 'd-flex justify-content-between' ?>">

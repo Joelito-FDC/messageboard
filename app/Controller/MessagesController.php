@@ -50,6 +50,7 @@ class MessagesController extends AppController {
                     )              
                 )
             ));
+            $this->set('recipientProfile', $this->User->find('first', array('conditions' => array('User.id' => $recipientId))));
             $this->set('page', 'thread');
         } else {
             $this->Paginator->settings = array(

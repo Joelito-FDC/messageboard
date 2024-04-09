@@ -8,8 +8,7 @@
     $this->Html->script('bootstrap-4.0/js/bootstrap.min', array('block' => 'scriptBottom'));
     $this->Html->script('jquery-ui-1.13.2.custom/jquery-ui.js', array('block' => 'scriptBottom'));
     $this->Html->script('custom.script', array('block' => 'scriptBottom'));
-    $this->assign('title', 'Account');
-    $this->assign('username', $this->Session->read('User.name'));
+    $this->assign('title', 'User Profile');
 ?>
 
 <div class="text-center">
@@ -20,13 +19,13 @@
         <div class="mb-3 d-flex">
             <div class="border mr-2 mt-2" style="width: 100px; height: 100px;">
                 <?php
-                    if(!empty($accountInfo['User']['profile_pic'])) {
-                        echo $this->Html->image(h($accountInfo['User']['profile_pic']), array('style' => 'width: 100px; height: 100px;'));
-                    } else {
+                    if(!empty($accountInfo['User']['profile_pic'])):
+                        echo $this->Html->image($accountInfo['User']['profile_pic'], array('style' => 'width: 100px; height: 100px;'));
+                    else:
                 ?>
-                        <img src="" style="width: 100px; height: 100px;">
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" style="width: 100px; height: 100px;">
                 <?php        
-                    }
+                    endif;
                  ?>
             </div>
             <div class="ml-2 mb-2">

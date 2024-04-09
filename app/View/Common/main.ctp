@@ -8,7 +8,7 @@
     <body class="h-100">
         <div class="container h-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#"><?php echo h($this->fetch('username')) ?></a>
+                <a class="navbar-brand" href="#"><?php echo h($this->Session->read('User.name')); ?></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
