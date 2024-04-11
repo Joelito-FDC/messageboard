@@ -96,7 +96,7 @@ class UsersController extends AppController {
             $filename = null;
 
             if($this->request->data['User']['profile_pic']['size'] > 0 && !$filename = $this->User->fileUpload($image)) {
-                $this->Flash->error('Unable to modify information. Make sure to fill al fields.', array('clear' => true));
+                $this->Flash->error('Unable to modify information. Make sure to fill all fields.', array('clear' => true));
 
                 return;
             } elseif($this->request->data['User']['profile_pic']['size'] == 0) {
@@ -112,7 +112,7 @@ class UsersController extends AppController {
             if($this->User->save($this->request->data)) {
                 return $this->redirect(array('controller' => 'users', 'action' => 'profile'));
             } else {
-                $this->Flash->error('Unable to modify information.', array('clear' => true));
+                $this->Flash->error('Unable to modify information. Make sure to fill all fields.', array('clear' => true));
             }
         }
     }
