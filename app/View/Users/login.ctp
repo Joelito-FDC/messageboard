@@ -15,3 +15,7 @@
     echo $this->Form->input('password', array('style' => 'width: 60%'));
     echo $this->Form->end('Login');
 ?>
+
+<div class="text-center mt-3">
+    <?php echo $this->Html->link('Register', array('controller' => 'users', 'action' => 'registration')) ?>
+</div>
