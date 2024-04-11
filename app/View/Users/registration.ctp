@@ -7,8 +7,10 @@
     $this->Html->script('custom.script', array('block' => 'scriptBottom'));
 ?>
 
-<div id="registration-info-status" class="text-center">
+<div class="text-center">
     <?php echo $this->Flash->render(); ?>
+    <div id="registration-info-status">
+    </div>
 </div>
 
 <?php
