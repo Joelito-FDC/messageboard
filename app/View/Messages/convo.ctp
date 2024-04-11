@@ -44,7 +44,14 @@
         </div>
         <div class="border d-flex flex-column" style="width: 100%; min-height: 80px;">
             <div class="main-message-container ml-1 border-bottom h-100 <?php if($page == 'list') echo 'd-flex justify-content-between' ?>">
-                <div style="font-size: 14px;" class="list-thread-message-container p-2 w-100 <?php if($page == 'list') echo 'msg-clickable-container' ?>" data-redirect-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'threads', $message['Message']['recipient_id'])) ?>">
+                <?php
+                    $r_id = $message['Message']['recipient_id'];
+                    
+                    if($message['Message']['recipient_id'] == $this->Session->read('User.id')) {
+                        $r_id = $message['Message']['user_id'];
+                    }
+                ?>
+                <div style="font-size: 14px;" class="list-thread-message-container p-2 w-100 <?php if($page == 'list') echo 'msg-clickable-container' ?>" data-redirect-link="<?php echo $this->Html->url(array('controller' => 'messages', 'action' => 'threads', $r_id)) ?>">
                     <?php
                         if($page == 'list'):
                             $ellipse = '...';
