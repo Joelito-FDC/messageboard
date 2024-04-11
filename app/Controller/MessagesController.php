@@ -6,6 +6,8 @@ class MessagesController extends AppController {
     public $uses = array('User', 'Message');
 
     public function index() {
+        if(empty($this->Session->read('User.id'))) return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+
         $this->layout = '';
         $this->set('username', $this->Session->read('User.name'));
     }
