@@ -18,7 +18,14 @@ class User extends AppModel {
             'rule' => 'notBlank'
         ),
         'profile_pic' => array(
-            // 'rule' => 'notBlank'
+            'extensions' => array(
+                'rule' => array('extension', array('jpg', 'jpeg', 'png', 'gif')),
+                'message' => 'File is not supported'    
+            ),
+            'required' => array(
+                'rule' => 'notBlank',
+                'message' => 'Please select a profile picture.'
+            )
         ),
         'last_login_time' => array()
     );

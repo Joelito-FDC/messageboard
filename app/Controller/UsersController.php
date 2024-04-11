@@ -19,13 +19,19 @@ class UsersController extends AppController {
                 return;
             }
 
+            if($this->request->data['User']['password'] != $this->request->data['User']['confirm_password']) {
+                $this->Flash->error('Password did not match.', array('clear' => true));
+
+                return;
+            }
+
             $pass = $this->request->data['User']['password'];
             $this->request->data['User']['password'] = Security::hash($pass, 'sha1', true);
 
             if($this->User->save($this->request->data)) {
                 return $this->redirect(array('controller' => 'users', 'action' => 'registered'));
             } else {
-                $this->Flash->error('Unable to register.', array('clear' => true));
+                $this->Flash->error(print_r($this->request->data), array('clear' => true));
             }
         }
     }
