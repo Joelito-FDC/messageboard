@@ -18,5 +18,6 @@
                 </div>
             </div>
         </div>
+        <?php echo $this->fetch('scriptBottom') ?>
     </body>
 </html>

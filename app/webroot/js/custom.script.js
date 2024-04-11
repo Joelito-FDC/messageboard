@@ -1,4 +1,26 @@
 $(document).ready(function() {
+    if($('#UserRegistrationForm').length) {
+        console.log('Hello');
+        $('#UserRegistrationForm').on('submit', function(e) {
+            e.preventDefault();
+    
+            let userName = $('#UserName');
+            let userEmail = $('#UserEmail');
+            let userPassword = $('#UserPassword');
+            let userConfirmPassword = $('#UserConfirmPassword');
+            let infoStatus = $('#registration-info-status');
+    
+            if(userName.val().length < 5 || userName.val().length > 20) {
+                infoStatus.html(`<div class="alert alert-warning" role="alert">Name should be 5 to 20 characters.</div>`);
+            } else if(userPassword.val() != userConfirmPassword.val()) {
+                infoStatus.html(`<div class="alert alert-warning" role="alert">Password did not match.</div>`);
+            } else {
+                
+                $('#UserRegistrationForm').trigger('submit');
+            }
+        });
+    }
+
     if($('#profile-date').length) {
         $('#profile-date').datepicker();
         $('#profile-date').attr('required', false);
@@ -163,17 +185,37 @@ $(document).ready(function() {
             }
 
             if(('.msg-clickable-container').length) {
-                $('.msg-clickable-container').on('click', function() {
-                    window.location.href = $(this).data('redirectLink');
-                })
+                let msgClickable = $('.msg-clickable-container');
+
+                for(let count = 0; count < msgClickable.length; count++) {
+                    $(msgClickable[count]).on('click', function() {
+                        window.location.href = $(this).data('redirectLink');
+                    })
+                }
             }
 
             if($('.show-more-msg-content').length) {
+                let showMore = $('.show-more-msg-content');
+                let showLess = $('.show-less-msg-content');
+                let showMoreContainer = $('.msg-more-container');
+                let showLessContainer = $('.msg-less-container');
 
+                for(let count = 0; count < showMore.length; count++) {
+                    $(showMore[count]).on('click', function(e) {
+                        e.preventDefault();
+                        $(showMoreContainer[count]).removeClass('d-none').addClass('d-block');
+                        $(showLessContainer[count]).removeClass('d-block').addClass('d-none');
+                    });
+
+                    $(showLess[count]).on('click', function(e) {
+                        e.preventDefault();
+                        $(showLessContainer[count]).removeClass('d-none').addClass('d-block');
+                        $(showMoreContainer[count]).removeClass('d-block').addClass('d-none');
+                    })
+                }
             }
         }).fail(function () {
             $('#message-list').html('<div class="text-center">Error fetching data.</div>');
         });
     }
 });
-

@@ -3,9 +3,11 @@
     $this->Html->css('bootstrap-4.0/css/bootstrap.min', array('inline' => false));
     $this->Html->css('custom.style', array('inline' => false));
     $this->assign('page', 'Registration');
+    $this->Html->script('jquery-3.2.1.min', array('block' => 'scriptBottom'));
+    $this->Html->script('custom.script', array('block' => 'scriptBottom'));
 ?>
 
-<div class="text-center">
+<div id="registration-info-status" class="text-center">
     <?php echo $this->Flash->render(); ?>
 </div>
 

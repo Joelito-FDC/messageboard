@@ -1,4 +1,3 @@
-<?php // print_r($messages) ?>
 <?php foreach($messages as $message): ?>
     <?php if($page == 'list'): ?>
         <div class="font-weight-light text-secondary" style="font-size: 12px;">
@@ -55,15 +54,25 @@
                             $len = 200;
                         endif;
 
-                        echo $this->Text->truncate(
-                            h($message['Message']['message']),
-                            $len,
-                            array(
-                                'ellipsis' => $ellipse,
-                                'exact' => true
-                            )
-                        );
+                        $showMoreLess = strlen(h($message['Message']['message'])) > $len;
                     ?>
+                    <div class="d-block <?php if($showMoreLess && $page != 'list') echo 'msg-less-container' ?>">
+                        <?php  
+                            echo $this->Text->truncate(
+                                h($message['Message']['message']),
+                                $len,
+                                array(
+                                    'ellipsis' => $ellipse,
+                                    'exact' => true
+                                )
+                            );
+                        ?>
+                    </div>
+                    <?php if($showMoreLess && $page != 'list'): ?>
+                        <div class="msg-more-container d-none">
+                            <?php echo h($message['Message']['message']) . "<a href='#' class='show-less-msg-content'>...show less</a>" ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <?php if($page == 'list'): ?>
                     <div class="d-flex align-items-center m-1">
