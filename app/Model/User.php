@@ -3,22 +3,26 @@
 class User extends AppModel {
     public $validate = array(
         'name' => array(
-            'rule' => 'notBlank',
+            'rule' => array('lengthBetween', 5, 20),
+            'message' => 'Name should be 5 to 20 characters.'
         ),
         'email' => array(
-            'rule' => 'notBlank'
+            'rule' => array('email', true),
+            'message' => 'Please use a valid email address.'
         ), 
         'password' => array(
             'rule' => 'notBlank'
         ),
         'birthdate' => array(
-            'rule' => 'notBlank'
+            'rule' => 'notBlank',
+            'message' => 'Please enter your birthdate.'
         ), 
         'gender' => array(
-            'rule' => 'notBlank'
+            'rule' => 'notBlank',
+            'message' => 'Please choose a gender.'
         ),
         'profile_pic' => array(
-            'extensions' => array(
+            'extension' => array(
                 'rule' => array('extension', array('jpg', 'jpeg', 'png', 'gif')),
                 'message' => 'File is not supported'    
             ),
@@ -26,6 +30,10 @@ class User extends AppModel {
                 'rule' => 'notBlank',
                 'message' => 'Please select a profile picture.'
             )
+        ),
+        'hobby' => array(
+            'rule' => 'notBlank',
+            'message' => 'Please enter you hobby.'
         ),
         'last_login_time' => array()
     );

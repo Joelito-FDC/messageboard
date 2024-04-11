@@ -23,16 +23,16 @@ class UsersController extends AppController {
                 $this->Flash->error('Password did not match.', array('clear' => true));
 
                 return;
-            }
-
+            } 
+            
             $pass = $this->request->data['User']['password'];
             $this->request->data['User']['password'] = Security::hash($pass, 'sha1', true);
 
             if($this->User->save($this->request->data)) {
                 return $this->redirect(array('controller' => 'users', 'action' => 'registered'));
-            } else {
-                $this->Flash->error(print_r($this->request->data), array('clear' => true));
             }
+
+            $this->request->data['User']['password'] = $pass;
         }
     }
 
@@ -96,7 +96,7 @@ class UsersController extends AppController {
             $filename = null;
 
             if($this->request->data['User']['profile_pic']['size'] > 0 && !$filename = $this->User->fileUpload($image)) {
-                $this->Flash->error('Unable to modify information', array('clear' => true));
+                $this->Flash->error('Unable to modify information. Make sure to fill al fields.', array('clear' => true));
 
                 return;
             } elseif($this->request->data['User']['profile_pic']['size'] == 0) {

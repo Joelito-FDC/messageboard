@@ -46,3 +46,9 @@ div.submit {
 .msg-clickable-container:hover {
     cursor: pointer;
 }
+
+.error-message {
+    color: #721c24;
+    font-size: 13px;
+    text-align: center;
+}

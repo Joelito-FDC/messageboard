@@ -30,7 +30,7 @@
                 ?>
             </div>
             <div class="m-1">
-                <?php echo $this->Form->input('profile_pic', array('type' => 'file', 'label' => 'Upload Pic', 'accept' => 'image/png, image/jpeg, image/gif', 'class' => 'd-none')) ?>
+                <?php echo $this->Form->input('profile_pic', array('type' => 'file', 'label' => 'Upload Pic', 'accept' => 'image/png, image/jpeg, image/gif', 'class' => 'd-none', 'required' => false)) ?>
             </div>
         </div>
         <?php
