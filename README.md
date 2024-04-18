@@ -11,7 +11,7 @@ Our primary goal is to provide a structured framework that enables PHP users at 
 
 ## Some Handy Links
 
-[CakePHP](https://cakephp.org) - The rapid development PHP framework
+[CakePHP](https://cakephp.org) - We are rapid because we are framework
 
 [CookBook](https://book.cakephp.org) - THE CakePHP user documentation; start learning here!
 
